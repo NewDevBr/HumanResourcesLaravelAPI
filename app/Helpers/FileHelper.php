@@ -4,12 +4,13 @@ namespace App\Helpers;
 
 class FileHelper
 {
-    public static function save($request, $whereSave)
+
+    public static function save($request)
     {
         if($request->hasFile("img") && $request->file("img")->isValid())
         {
             $fileName = self::generateFileName($request->file('img'));
-            $pathPhoto = self::upload($request->file("img"), $fileName, $whereSave);
+            $pathPhoto = self::upload($request->file("img"), $fileName);
             return $pathPhoto;
         }
     }
@@ -22,21 +23,20 @@ class FileHelper
         return $fileName;
     }
 
-    public static function upload($file, $fileName, $whereSave)
+    public static function upload($file, $fileName)
     {
-        $upload = $file->storeAs($whereSave, $fileName);
-        $filePath = "storage" .DIRECTORY_SEPARATOR. "admins" .DIRECTORY_SEPARATOR. $fileName;
+        $upload = $file->storeAs('public/photos', $fileName);
+        $filePath = "storage" .DIRECTORY_SEPARATOR. "photos" .DIRECTORY_SEPARATOR. $fileName;
         if(!$upload)
         {
             unlink($filePath);
-            return response()
-                ->json([
-                    "msg"=>"Some error occurred with image upload",
-                    "sucess"=>false
-                ],
-                500
-            );
+            return response()->json(["message"=>"Some error occurred with image upload"], 500);
         }
         return $filePath;
+    }
+
+    public static function getFilePath($storedPath)
+    {
+        return str_replace('\\','/', $storedPath);
     }
 }

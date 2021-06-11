@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Candidate extends Model
+class Candidate extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasApiTokens, HasFactory, SoftDeletes;
 
      /**
      * The attributes that are mass assignable.
@@ -46,4 +48,19 @@ class Candidate extends Model
         'notify_email'=>'boolean',
         'birthDate'=>'datetime'
     ];
+
+    public function diplomas()
+    {
+        return $this->belongsToMany(Diploma::class, 'candidate_diplomas');
+    }
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class, 'technology_candidates');
+    }
+
+    public function vacancies()
+    {
+        return $this->belongsToMany(Vacancy::class, 'candidates_vacancies');
+    }
 }

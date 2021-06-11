@@ -32,6 +32,11 @@ class VacancyController extends Controller
         return new VacancyResource($vacancy);
     }
 
+    public function subscribe()
+    {
+        
+    }
+
     /**
      * Display the specified resource.
      *

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class CandidateController extends Controller
 {
-    private $whereSave = 'public/candidate';
 
     /**
      * Display a listing of the resource.
@@ -34,7 +33,7 @@ class CandidateController extends Controller
     public function store(StoreCandidateRequest $request)
     {
         $validated = $request->validated();
-        $validated["pathPhoto"] = FileHelper::save($request, $this->whereSave);
+        $validated["pathPhoto"] = FileHelper::save($request);
         $validated["password"] = Hash::make($validated["password"]);
         $admin = Candidate::create($validated);
         return new CandidateResource($admin);
@@ -85,8 +84,8 @@ class CandidateController extends Controller
         $candidate = Candidate::findOrFail($id);
         if(isset($candidate))
         {
-            unlink($candidate["pathPhoto"]);
-            $candidate["pathPhoto"] = FileHelper::save($request, $this->whereSave);
+            unlink(FileHelper::getFilePath($candidate["pathPhoto"]));
+            $candidate["pathPhoto"] = FileHelper::save($request);
             if($candidate->save()){
                 return response()->json(["message"=>"Your image has success on update"]);
             }
@@ -105,7 +104,7 @@ class CandidateController extends Controller
         $candidate = Candidate::findOrFail($id);
         if(isset($candidate))
         {
-            unlink($candidate["pathPhoto"]);
+            unlink(FileHelper::getFilePath($candidate["pathPhoto"]));
             if($candidate->delete()){
                 return response()->json(["message"=>"This candidate was deleted"]);
             }

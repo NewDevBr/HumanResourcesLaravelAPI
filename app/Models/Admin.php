@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasApiTokens, HasFactory, SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -32,4 +34,8 @@ class Admin extends Model
         'password',
     ];
 
+    public function vacancies()
+    {
+        return $this->hasMany(Vacancy::class);
+    }
 }

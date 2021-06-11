@@ -9,12 +9,12 @@ use App\Http\Requests\{StoreAdminRequest, UpdateImageRequest};
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\Admin as AdminResource;
 
+
 class AdminController extends Controller
 {
-    private $whereSave = 'public/admin';
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. *
      *
      * @return \Illuminate\Http\Response
      */
@@ -26,7 +26,7 @@ class AdminController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. *
      *
      * @param  \App\Http\Requests\StoreAdminRequest  $request
      * @return \Illuminate\Http\Response
@@ -34,14 +34,14 @@ class AdminController extends Controller
     public function store(StoreAdminRequest $request)
     {
         $validated = $request->validated();
-        $validated["pathPhoto"] = FileHelper::save($request, $this->whereSave);
+        $validated["pathPhoto"] = FileHelper::save($request);
         $validated["password"] = Hash::make($validated["password"]);
         $admin = Admin::create($validated);
         return new AdminResource($admin);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource. *
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -90,8 +90,8 @@ class AdminController extends Controller
         $admin = Admin::findOrFail($id);
         if(isset($admin))
         {
-            unlink($admin["pathPhoto"]);
-            $admin["pathPhoto"] = FileHelper::save($request, $this->whereSave);
+            unlink(FileHelper::getFilePath($admin["pathPhoto"]));
+            $admin["pathPhoto"] = FileHelper::save($request);
             if($admin->save()){
                 return response()->json(["message"=>"Your image has success on update"]);
             }
@@ -111,7 +111,7 @@ class AdminController extends Controller
         $admin = Admin::findOrFail($id);
         if(isset($admin))
         {
-            unlink($admin["pathPhoto"]);
+            unlink(FileHelper::getFilePath($admin["pathPhoto"]));
             if($admin->delete()){
                 return response()->json(["message"=>"This administrator was deleted"]);
             }

@@ -22,4 +22,9 @@ class Vacancy extends Model
         'hiring',
         'admin_id'
     ];
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
 }
