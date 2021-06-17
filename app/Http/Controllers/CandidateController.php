@@ -35,6 +35,7 @@ class CandidateController extends Controller
         $validated = $request->validated();
         $validated["pathPhoto"] = FileHelper::save($request);
         $validated["password"] = Hash::make($validated["password"]);
+        $validated["notify_email"] = $validated["notify_email"] ? 1 : 0;
         $admin = Candidate::create($validated);
         return new CandidateResource($admin);
     }

@@ -57,7 +57,7 @@ Route::group(['prefix'=>'/candidate', 'middleware'=>'auth:sanctum'],function(){
     
     Route::post('/revokeToken', [AuthController::class, 'revokeToken']);
     
-    Route::put('/', [CandidateController::class, 'update']);
+    Route::put('/{id}', [CandidateController::class, 'update']);
     
     Route::delete('/{id}', [CandidateController::class, 'destroy']);
 });

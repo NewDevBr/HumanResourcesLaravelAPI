@@ -28,7 +28,7 @@ class StoreCandidateRequest extends FormRequest
             'name' => 'required|min:3|max:45',
             'titration' => 'required|max:45',
             'birthDate' => 'required|date',
-            'email'=>'required|email|unique:admins',
+            'email'=>'required|email|unique:candidates',
             'password' => 'required|min:8',
             'github' => 'required',
             'linkedin' => 'required',
