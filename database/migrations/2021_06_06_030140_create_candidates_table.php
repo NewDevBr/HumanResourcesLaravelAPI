@@ -24,7 +24,7 @@ class CreateCandidatesTable extends Migration
             $table->string("github");
             $table->string("linkedin");
             $table->datetime("email_verified_at")->nullable();
-            $table->boolean("notify_email");
+            $table->boolean("notify_email")->default('0');;
             $table->timestamps();
             $table->softDeletes();
         });

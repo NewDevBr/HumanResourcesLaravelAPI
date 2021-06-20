@@ -35,9 +35,8 @@ class CandidateController extends Controller
         $validated = $request->validated();
         $validated["pathPhoto"] = FileHelper::save($request);
         $validated["password"] = Hash::make($validated["password"]);
-        $validated["notify_email"] = $validated["notify_email"] ? 1 : 0;
-        $admin = Candidate::create($validated);
-        return new CandidateResource($admin);
+        $candidate = Candidate::create($validated);
+        return new CandidateResource($candidate);
     }
 
     /**
@@ -48,8 +47,8 @@ class CandidateController extends Controller
      */
     public function show($id)
     {
-        $admin = Candidate::findOrFail($id);
-        return new CandidateResource($admin);
+        $candidate = Candidate::findOrFail($id);
+        return new CandidateResource($candidate);
     }
 
     /**

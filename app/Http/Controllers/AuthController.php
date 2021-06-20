@@ -70,6 +70,6 @@ class AuthController extends Controller
 
     public function revokeToken(Request $request)
     {
-        $request->currentAccessToken()->delete();
+        $request->user()->currentAccessToken()->delete();
     }
 }

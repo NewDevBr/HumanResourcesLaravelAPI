@@ -19,9 +19,10 @@ use App\Http\Controllers\{AdminController, VacancyController, CandidateControlle
 
 Route::post('admin/login', [AuthController::class, 'loginAdmin']);
 
+
 Route::group(['prefix' => '/admin','middleware' => 'auth:sanctum'], function(){
     
-    Route::get('{id}', [AdminController::class, 'show']);
+    Route::get('/{id}', [AdminController::class, 'show']);
     Route::get('/', [AdminController::class, 'index']);
     
     Route::post('/', [AdminController::class, 'store']);

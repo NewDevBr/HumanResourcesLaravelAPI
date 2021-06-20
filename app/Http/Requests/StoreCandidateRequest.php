@@ -31,8 +31,7 @@ class StoreCandidateRequest extends FormRequest
             'email'=>'required|email|unique:candidates',
             'password' => 'required|min:8',
             'github' => 'required',
-            'linkedin' => 'required',
-            'notify_email' => 'required'
+            'linkedin' => 'required'
         ];
     }
 }
