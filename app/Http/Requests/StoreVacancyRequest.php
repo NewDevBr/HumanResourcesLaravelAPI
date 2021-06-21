@@ -27,8 +27,7 @@ class StoreVacancyRequest extends FormRequest
             'title' => 'required|max:45|min:3',
             'description' => 'required|max:255|min:2',
             'remote' => 'required',
-            'hiring' => 'required',
-            'admin_id' => 'required'
+            'hiring' => 'required'
         ];
     }
 }

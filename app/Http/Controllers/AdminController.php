@@ -68,15 +68,33 @@ class AdminController extends Controller
             $admin->name = $request->input("name");
             $admin->email = $request->input("email");
             $admin->post = $request->input("post");
-            $admin->password = Hash::make($request->input("password"));
+            // $admin->password = Hash::make($request->input("password"));
             if($admin->save()){
                 return new AdminResource($admin);
             }
-
         }
         return response()->json(["message"=>"Error trying to update your datas"], 500);
     }
 
+    /**
+     * Update the password resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(Request $request, $id)
+    {
+        $admin = Admin::findOrFail($id);
+        if(isset($admin))
+        {
+            $admin->password = Hash::make($request->input("password"));
+            if($admin->save()){
+                return new AdminResource($admin);
+            }
+        }
+        return response()->json(["message"=>"Error trying to update your datas"], 500);
+    }
 
     /**
      * Update an Admin photo

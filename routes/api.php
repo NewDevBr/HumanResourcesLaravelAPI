@@ -29,7 +29,8 @@ Route::group(['prefix' => '/admin','middleware' => 'auth:sanctum'], function(){
     Route::post('/photo/{id}', [AdminController::class, 'updatePhoto']);
     Route::post('/revokeToken', [AuthController::class, 'revokeToken']);
     
-    Route::put('/', [AdminController::class, 'update']);
+    Route::put('/{id}', [AdminController::class, 'update']);
+    Route::put('/changePassword/{id}', [AdminController::class, 'updatePassword']);
     
     Route::delete('/{id}', [AdminController::class, 'destroy']);
 });
