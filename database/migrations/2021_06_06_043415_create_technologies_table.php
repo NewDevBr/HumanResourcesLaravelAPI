@@ -15,7 +15,7 @@ class CreateTechnologiesTable extends Migration
     {
         Schema::create('technologies', function (Blueprint $table) {
             $table->id();
-            $table->string("name", 45);
+            $table->string("name", 45)->unique();;
             $table->timestamps();
             $table->softDeletes();
         });

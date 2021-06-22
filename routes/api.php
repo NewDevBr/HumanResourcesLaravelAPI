@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AdminController, VacancyController, CandidateController};
+use App\Http\Controllers\{AdminController, VacancyController, CandidateController, TechnologyController};
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ Route::group(['prefix' => '/admin','middleware' => 'auth:sanctum'], function(){
     Route::get('/{id}', [AdminController::class, 'show']);
     Route::get('/', [AdminController::class, 'index']);
     
-    Route::post('/', [AdminController::class, 'store']);
+    Route::post('/admin', [AdminController::class, 'store']);
     Route::post('/photo/{id}', [AdminController::class, 'updatePhoto']);
     Route::post('/revokeToken', [AuthController::class, 'revokeToken']);
     
@@ -62,4 +62,16 @@ Route::group(['prefix'=>'/candidate', 'middleware'=>'auth:sanctum'],function(){
     Route::put('/{id}', [CandidateController::class, 'update']);
     
     Route::delete('/{id}', [CandidateController::class, 'destroy']);
+});
+
+Route::group(['prefix'=>'/technology', 'middleware'=>'auth:sanctum'], function(){
+    
+    Route::get('/{id}', [TechnologyController::class, 'show']);
+    Route::get('/', [TechnologyController::class, 'index']);
+    
+    Route::post('/', [TechnologyController::class, 'store']);
+
+    Route::put('/{id}', [TechnologyController::class, 'update']);
+    
+    Route::delete('/{id}', [TechnologyController::class, 'destroy']);
 });

@@ -6,6 +6,7 @@ use App\Models\Technology;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Resources\Technology as TechnologyResource;
+use DateTime;
 
 class TechnologyController extends Controller
 {
@@ -28,8 +29,9 @@ class TechnologyController extends Controller
      */
     public function store(StoreTechnologyRequest $request)
     {
-        $tech = $request->validated();
-        Technology::create($tech);
+        $validated = $request->validated();
+        $tech = Technology::create($validated);
+        return new TechnologyResource($tech);
     }
 
     /**
@@ -38,10 +40,13 @@ class TechnologyController extends Controller
      * @param  \App\Models\Technology  $technology
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $id)
+    public function show($id)
     {
         $tech = Technology::findOrFail($id);
-        return new TechnologyResource($tech);
+        if(isset($tech)){
+            return new TechnologyResource($tech);
+        }
+        return response()->json(["message"=>"Error trying to get this technology", 500]);
     }
 
     /**
@@ -51,19 +56,20 @@ class TechnologyController extends Controller
      * @param  \App\Models\Technology  $technology
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreTechnologyRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $tech = Technology::findOrFail($id);
         if(isset($tech))
         {
-            $validated = $request->validated();
-            $tech->name = $validated["name"];
+            $tech->name = $request->input("name");
+            $currentDate = new DateTime();
+            $tech->updated_at = $currentDate;
             if($tech->save()){
-                return new TechnologyResource($tech);
+                return response()->json(["message"=>"Success to update this thecnology"]);
             }
-
+        } else {
+            return response()->json(["message"=>"Error trying to update this technology"], 500);
         }
-        return response()->json(["message"=>"Error trying to update this technology"], 500);
     }
 
     /**
