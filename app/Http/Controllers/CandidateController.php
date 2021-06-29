@@ -96,7 +96,9 @@ class CandidateController extends Controller
             unlink(FileHelper::getFilePath($candidate["pathPhoto"]));
             $candidate["pathPhoto"] = FileHelper::save($request);
             if ($candidate->save()) {
-                return response()->json(["message" => "Your image has success on update"]);
+                return response()->json(["message"=>"Your image has success on update", "path"=>$candidate["pathPhoto"]]);
+            } else {
+                return response()->json(["message" => "Error trying to update your photo"], 500);        
             }
         }
         return response()->json(["message" => "Error trying to update your photo"], 500);
