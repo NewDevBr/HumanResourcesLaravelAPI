@@ -59,7 +59,7 @@ class TechnologyController extends Controller
     public function searchToList($searchedValue)
     {
         $techList = DB::table('technologies')
-            ->where('name','LIKE','%'.$searchedValue.'%')
+            ->where([['name','LIKE','%'.$searchedValue.'%'],['deleted_at','=' ,null]])
             ->take(10)
             ->get();
         if(isset($techList)){
