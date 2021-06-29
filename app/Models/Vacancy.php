@@ -25,6 +25,16 @@ class Vacancy extends Model
 
     public function admin()
     {
-        return $this->hasOne(Admin::class);
+        return $this->belongsTo(Admin::class);
+    }
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class, 'technology_vacancies')->withPivot('technology_id');
+    }
+
+    public function candidates()
+    {
+        return $this->belongsToMany(Candidate::class, 'candidates_vacancies')->withPivot('candidate_id');
     }
 }

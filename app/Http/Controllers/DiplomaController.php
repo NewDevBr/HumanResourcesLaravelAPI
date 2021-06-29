@@ -6,19 +6,12 @@ use App\Models\Diploma;
 use Illuminate\Http\Request;
 use App\Http\Resources\Diploma as DiplomaResource;
 use App\Http\Requests\StoreDiplomaRequest;
+use App\Models\{Candidate, CandidateDiploma};
+use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class DiplomaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $diploma = Diploma::paginate(15);
-        return new DiplomaResource($diploma);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -26,9 +19,19 @@ class DiplomaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDiplomaRequest $request)
+    public function store(StoreDiplomaRequest $request, $idCandidate)
     {
-        //
+
+        $validated = $request->validated();
+        $diploma = Diploma::create($validated);
+        $result = CandidateDiploma::create([
+            "candidate_id" => $idCandidate,
+            "diploma_id" => $diploma["id"]
+        ]);
+        if ($result) {
+            return response(["message" => "Diploma successfully created"], 200);
+        }
+        return response(["message" => "Error trying to create this diploma"], 500);
     }
 
     /**
@@ -37,14 +40,14 @@ class DiplomaController extends Controller
      * @param  \App\Models\Diploma  $diploma
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($idCandidate)
     {
-        $diploma = Diploma::findOrFail($id);
-        if(isset($diploma))
-        {
-            return new DiplomaResource($diploma);
+        $candidate = Candidate::find($idCandidate);
+        $diplomas = $candidate->diplomas;
+        if ($diplomas) {
+            return $diplomas;
         }
-        return response()->json(["message"=>"Error occurred trying to get this diploma"], 500);
+        return response()->json(["message" => "Error occurred trying to get diplomas"], 500);
     }
 
     /**
@@ -57,15 +60,14 @@ class DiplomaController extends Controller
     public function update(StoreDiplomaRequest $request, $id)
     {
         $diploma = Diploma::findOrFail($id);
-        if(isset($diploma))
-        {
+        if ($diploma) {
             $validated = $request->validated();
             $diploma->course = $validated['course'];
             $diploma->institution = $validated['institution'];
-            $diploma->inital_date = $validated['initialDate'];
-            $diploma->final_date = $validated['finalDate'];
-            if($diploma->save())
-            {
+            $diploma->initial_date = $validated['initial_date'];
+            $diploma->final_date = $validated['final_date'];
+            $diploma->updated_at = new DateTime();
+            if ($diploma->save()) {
                 return new DiplomaResource($diploma);
             }
         }
@@ -81,13 +83,11 @@ class DiplomaController extends Controller
     public function destroy($id)
     {
         $diploma = Diploma::findOrFail($id);
-        if(isset($diploma))
-        {
-            if($diploma->delete())
-            {
-                return response()->json(["message"=>"This diploma was success deleted"]);
+        if ($diploma) {
+            if ($diploma->delete()) {
+                return response()->json(["message" => "This diploma was success deleted"]);
             }
         }
-        return response()->json(["message"=>"Error occurred while try delete this diploma"], 500);
+        return response()->json(["message" => "Error occurred while try delete this diploma"], 500);
     }
 }

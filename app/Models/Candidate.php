@@ -51,16 +51,16 @@ class Candidate extends Authenticatable
 
     public function diplomas()
     {
-        return $this->belongsToMany(Diploma::class, 'candidate_diplomas');
+        return $this->belongsToMany(Diploma::class, 'candidate_diplomas')->withPivot('diploma_id');
     }
 
     public function technologies()
     {
-        return $this->belongsToMany(Technology::class, 'technology_candidates');
+        return $this->belongsToMany(Technology::class, 'technology_candidates')->withPivot('technology_id');
     }
 
     public function vacancies()
     {
-        return $this->belongsToMany(Vacancy::class, 'candidates_vacancies');
+        return $this->belongsToMany(Vacancy::class, 'candidates_vacancies')->withPivot('vacancy_id');
     }
 }

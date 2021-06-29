@@ -16,4 +16,5 @@ class Diploma extends Model
         'initial_date',
         'final_date'
     ];
+
 }

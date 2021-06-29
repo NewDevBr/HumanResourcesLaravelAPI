@@ -31,6 +31,7 @@ class AuthController extends Controller
         }
     }
 
+  
     public function loginCandidate(PostLoginRequest $request)
     {
         $validated = $request->validated();
@@ -62,6 +63,8 @@ class AuthController extends Controller
                     'token_type' => 'Bearer',
                     'data' => $candidate
                 ]);
+            } else {
+                return response()->json(["message"=>"Error trying to login as candidate"], 401);    
             }
         } else {
             return response()->json(["message"=>"Error trying to login as candidate"], 401);

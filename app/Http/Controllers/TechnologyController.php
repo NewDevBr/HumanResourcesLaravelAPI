@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Technology;
+use App\Models\{Technology, Candidate};
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Resources\Technology as TechnologyResource;
+use Illuminate\Support\Facades\DB;
 use DateTime;
 
 class TechnologyController extends Controller
@@ -50,6 +51,25 @@ class TechnologyController extends Controller
     }
 
     /**
+     * Returns a result list according as like parameter.
+     *
+     * @param  \App\Models\Technology  $technology
+     * @return \Illuminate\Http\Response
+     */
+    public function searchToList($searchedValue)
+    {
+        $techList = DB::table('technologies')
+            ->where('name','LIKE','%'.$searchedValue.'%')
+            ->take(10)
+            ->get();
+        if(isset($techList)){
+            return new TechnologyResource($techList);
+        } else {
+            return response()->json(["message"=>"No one register match with this descritpion", 500]);
+        }
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -86,5 +106,22 @@ class TechnologyController extends Controller
             return response()->json(["message"=>"This technology was success deleted"]);
         }
         return response()->json(["message"=>"Error trying to delete this technology"], 500);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Technology  $technology
+     * @return \Illuminate\Http\Response
+     */
+    public function candidateTechnologies($id)
+    {
+        $candidate = Candidate::findOrFail($id);
+        if($candidate)
+        {
+            return $candidate->technologies;
+        } else {
+            return response()->json(["message"=>"Error trying to get technologies that candidate knows"], 500);
+        }
     }
 }

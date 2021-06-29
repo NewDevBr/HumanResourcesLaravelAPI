@@ -16,13 +16,13 @@ class CreateTechnologyCandidatesTable extends Migration
         Schema::create('technology_candidates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('candidate_id');
-            $table->foreignId('technologie_id');
+            $table->foreignId('technology_id');
             $table->timestamps();
         });
 
         Schema::table('technology_candidates', function (Blueprint $table) {
             $table->foreign('candidate_id')->references('id')->on('candidates');
-            $table->foreign('technologie_id')->references('id')->on('technologies');
+            $table->foreign('technology_id')->references('id')->on('technologies');
         });
     }
 

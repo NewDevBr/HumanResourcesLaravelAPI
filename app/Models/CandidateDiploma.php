@@ -12,4 +12,9 @@ class CandidateDiploma extends Model
         'candidate_id',
         'diploma_id'
     ];
+
+    public function diplomas()
+    {
+        return $this->belongsTo(Diploma::class);
+    }
 }

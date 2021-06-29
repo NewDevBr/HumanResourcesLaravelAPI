@@ -25,9 +25,11 @@ class StoreVacancyRequest extends FormRequest
     {
         return [
             'title' => 'required|max:45|min:3',
-            'description' => 'required|max:255|min:2',
+            'description' => 'required|max:3500|min:2',
             'remote' => 'required',
-            'hiring' => 'required'
+            'hiring' => 'required',
+            'admin_id' => 'required|integer',
+            'technologies'=> 'required'
         ];
     }
 }

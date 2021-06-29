@@ -20,7 +20,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::paginate(15);
+        $admins = Admin::paginate(5);
         return AdminResource::collection($admins);
     }
 
@@ -111,7 +111,7 @@ class AdminController extends Controller
             unlink(FileHelper::getFilePath($admin["pathPhoto"]));
             $admin["pathPhoto"] = FileHelper::save($request);
             if($admin->save()){
-                return response()->json(["message"=>"Your image has success on update"]);
+                return response()->json(["message"=>"Your image has success on update", "path"=>$admin["pathPhoto"]]);
             }
         } else {
             return response()->json(["message"=>"Error trying to update your photo"], 500);

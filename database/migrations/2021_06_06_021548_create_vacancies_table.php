@@ -16,7 +16,7 @@ class CreateVacanciesTable extends Migration
         Schema::create('vacancies', function (Blueprint $table) {
             $table->id();
             $table->string('title', 45);
-            $table->string('description');
+            $table->string('description', 3500);
             $table->boolean('remote');
             $table->enum('hiring',['CLT','PJ','CLT/PJ', 'Internship']);
             $table->foreignId('admin_id');

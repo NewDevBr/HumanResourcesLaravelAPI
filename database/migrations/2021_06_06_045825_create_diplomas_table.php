@@ -17,7 +17,7 @@ class CreateDiplomasTable extends Migration
             $table->id();
             $table->string("course", 45);
             $table->string("institution", 45);
-            $table->date("inital_date");
+            $table->date("initial_date");
             $table->date("final_date");
             $table->timestamps();
             $table->softDeletes();

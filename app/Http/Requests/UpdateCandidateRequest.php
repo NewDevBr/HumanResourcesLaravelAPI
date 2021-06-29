@@ -13,7 +13,7 @@ class UpdateCandidateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class UpdateCandidateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3|max:45',
+            'titration' => 'required|max:45',
+            'birthDate' => 'required|date',
+            'email'=>'required|email|unique:candidates',
+            'github' => 'required',
+            'linkedin' => 'required',
+            'notify_email' => 'required|boolean'
         ];
     }
 }

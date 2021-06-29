@@ -24,11 +24,10 @@ class StoreDiplomaRequest extends FormRequest
     public function rules()
     {
         return [
-            'idUser' => 'required',
-            'course' => 'required',
-            'institution' => 'required',
-            'initialDate' => 'required|date',
-            'finalDate' => 'required|date',
+            'course' => 'required|min:3|max:45',
+            'institution' => 'required|min:3|max:45',
+            'initial_date' => 'required|date',
+            'final_date' => 'required|date',
         ];
     }
 }
