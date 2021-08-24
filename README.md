@@ -3,7 +3,7 @@
 
 ### Project status
 
-![Badge](https://img.shields.io/static/v1?label=Framwork&message=Laravel&color=red&style=for-the-badge&logo=laravel) ![Badge](https://img.shields.io/static/v1?label=Language&message=PHP&color=blue&style=for-the-badge&logo=PHP) ![Badge](https://img.shields.io/static/v1?label=Database&message=MYSQL&color=blue&style=for-the-badge&logo=mysql) ![Badge](https://img.shields.io/static/v1?label=Project_Stage&message=in_progress&color=sucess&style=for-the-badge) 
+![Badge](https://img.shields.io/static/v1?label=Framwork&message=Laravel&color=red&style=for-the-badge&logo=laravel) ![Badge](https://img.shields.io/static/v1?label=Language&message=PHP&color=blue&style=for-the-badge&logo=PHP) ![Badge](https://img.shields.io/static/v1?label=Database&message=MYSQL&color=blue&style=for-the-badge&logo=mysql) ![Badge](https://img.shields.io/static/v1?label=Project_Stage&message=progressing&color=sucess&style=for-the-badge) 
 
 ### Index
 
