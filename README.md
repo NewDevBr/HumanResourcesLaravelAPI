@@ -120,4 +120,4 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ### 4. About MySQL <a name="aboutMysql">
 
-MySQL is a Database Management System (DMS), based on structured tables and entities relationship. This is the most famous database, maintained by Oracle according to Stack Overflow (SO) Survey 2020 [SO survey](https://insights.stackoverflow.com/survey/2020#technology-databases-all-respondents4). Software version used to construct this PHP class was MySQL Community version, available to download in: [MySQL Community Downloads](https://dev.mysql.com/downloads/)
+MySQL is a Database Management System (DMS), based on structured tables and entities relationship. This is the most famous database, maintained by Oracle according to Stack Overflow (SO) Survey 2020 [SO survey](https://insights.stackoverflow.com/survey/2020#technology-databases-all-respondents4). Software version used to construct it was MySQL Community version, available to download in: [MySQL Community Downloads](https://dev.mysql.com/downloads/)
